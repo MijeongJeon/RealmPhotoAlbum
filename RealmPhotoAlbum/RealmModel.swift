@@ -14,7 +14,7 @@ class Album: Object {
     dynamic var title: String = ""
     dynamic var saveDate: Date = Date()
     // UUID for Primary-key
-    //    dynamic var uuid: String = UUID().uuidString
+        dynamic var uuid: String = UUID().uuidString
     let photos: List<Photo> = List<Photo>()
     
     // set primary-key

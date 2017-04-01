@@ -137,7 +137,7 @@ class AbumTableViewController: UITableViewController, UISearchBarDelegate {
     
     // Realm Filter
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        albums = realm.objects(Album.self).filter("title contains[c] %@", searchText)
+        albums = realm.objects(Album.self).filter("title contains[c] %@", searchText).sorted(byKeyPath: "saveDate", ascending: false)
         tableView.reloadData()
     }
     

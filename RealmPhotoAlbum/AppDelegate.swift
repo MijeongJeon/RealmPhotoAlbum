@@ -19,24 +19,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Realm Migration
-//        let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
-//            if oldSchemaVersion < 1 {
-//                migration.enumerateObjects(ofType: Album.className(), { (oldObject, newObject) in
-//                    if oldSchemaVersion < 1 {
-//                        // set default value of new property
-//                        let uuid = UUID().uuidString
-//                        newObject?["uuid"] = uuid
-//                    }
-//                })
-//                migration.enumerateObjects(ofType: Photo.className()) { oldObject, newObject in
-//                    if oldSchemaVersion < 1 {
-//                        // do something
-//                    }
-//                }
-//                print("Migration complete.")
-//            }
-//        }
-//        Realm.Configuration.defaultConfiguration = Realm.Configuration(schemaVersion: 1, migrationBlock: migrationBlock)
+        let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                migration.enumerateObjects(ofType: Album.className(), { (oldObject, newObject) in
+                    if oldSchemaVersion < 1 {
+                        // set default value of new property
+                        let uuid = UUID().uuidString
+                        newObject?["uuid"] = uuid
+                    }
+                })
+                migration.enumerateObjects(ofType: Photo.className()) { oldObject, newObject in
+                    if oldSchemaVersion < 1 {
+                        // do something
+                    }
+                }
+                print("Migration complete.")
+            }
+        }
+        Realm.Configuration.defaultConfiguration = Realm.Configuration(schemaVersion: 0, migrationBlock: migrationBlock)
 
         return true
     }
