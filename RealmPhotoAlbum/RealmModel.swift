@@ -12,7 +12,7 @@ import RealmSwift
 // Album Model
 class Album: Object {
     dynamic var title: String = ""
-    // for Realm Migration test
+    // for Realm Migration test(title2 -> subTitle)
 //    dynamic var subTitle: String = ""
     dynamic var saveDate: Date = Date()
     // UUID for Primary-key and Migarion test
