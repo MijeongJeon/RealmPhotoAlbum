@@ -12,9 +12,11 @@ import RealmSwift
 // Album Model
 class Album: Object {
     dynamic var title: String = ""
+    // for Realm Migration test
+//    dynamic var subTitle: String = ""
     dynamic var saveDate: Date = Date()
-    // UUID for Primary-key
-        dynamic var uuid: String = UUID().uuidString
+    // UUID for Primary-key and Migarion test
+    dynamic var uuid: String = UUID().uuidString
     let photos: List<Photo> = List<Photo>()
     
     // set primary-key
