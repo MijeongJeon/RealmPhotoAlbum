@@ -21,8 +21,15 @@ class AbumTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        realm = try! Realm()
+        // Realm init
+        do {
+            realm = try Realm()
+        } catch {
+            print("\(error)")
+        }
+        // get Album objects
         albums = realm.objects(Album.self).sorted(byKeyPath: "saveDate", ascending: false)
+        // add notification block
         token = albums.addNotificationBlock({ (change) in
             self.tableView.reloadData()
         })
@@ -46,10 +53,11 @@ class AbumTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! AlbumTableViewCell
-        // set album image and title
+        // set album image if photo has been saved
         if let imageData = albums[indexPath.row].photos.sorted(byKeyPath: "saveDate", ascending: false).first?.imageData {
             cell.thumnailView.image = UIImage(data: imageData, scale: 0.1)
         }
+        // set album title
         cell.titleLabel.text = albums[indexPath.row].title
         return cell
     }

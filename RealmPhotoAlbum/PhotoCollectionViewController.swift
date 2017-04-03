@@ -23,8 +23,15 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        realm = try! Realm()
+        // Realm init
+        do {
+            realm = try Realm()
+        } catch {
+            print("\(error)")
+        }
+        // get Photo objects in selectedAlbum
         photos = selectedAlbum.photos.sorted(byKeyPath: "saveDate", ascending: false)
+        // add notification block
         token = photos.addNotificationBlock({ (change) in
             self.collectionView?.reloadData()
         })
@@ -50,7 +57,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCollectionViewCell
-    
+        // set saved image
         if let image = UIImage(data: photos[indexPath.item].imageData) {
             cell.imageView.image = image
         }
@@ -86,6 +93,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         let newPhoto = Photo()
         newPhoto.imageData = UIImageJPEGRepresentation(selectedImage, 0.01)!
+        // realm write
         do {
             try realm.write {
                 self.selectedAlbum.photos.append(newPhoto)
